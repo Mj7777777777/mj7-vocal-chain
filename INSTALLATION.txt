@@ -1,0 +1,30 @@
+MJ7 VOCAL CHAIN - INSTALLATION
+
+WINDOWS (FL Studio)
+1. Copiez le dossier "MJ7 Vocal Chain.vst3" dans :
+   C:\Program Files\Common Files\VST3
+2. Ouvrez FL Studio > Options > Manage plugins > Find installed plugins.
+3. Le plugin apparait sous "MJ7 Vocal Chain" (categorie Effects). Cochez l'etoile pour le mettre en favori.
+4. Chargez-le sur la piste de mixeur de la voix (un slot d'insert).
+
+MAC (FL Studio)
+1. Copiez "MJ7 Vocal Chain.vst3" dans :
+   Macintosh HD/Bibliotheque/Audio/Plug-Ins/VST3
+   (et, si vous voulez aussi l'Audio Unit, "MJ7 Vocal Chain.component" dans .../Plug-Ins/Components)
+2. Le plugin n'est pas signe par un compte developpeur Apple. Ouvrez l'application Terminal et collez :
+   sudo xattr -cr "/Library/Audio/Plug-Ins/VST3/MJ7 Vocal Chain.vst3"
+   sudo xattr -cr "/Library/Audio/Plug-Ins/Components/MJ7 Vocal Chain.component"
+3. FL Studio > Options > Manage plugins > Find installed plugins.
+   Utilisez la version VST3 sur Mac comme sur Windows : vos projets restent compatibles entre les deux.
+
+PREMIERE UTILISATION
+1. Choisissez un style dans la liste en haut.
+2. Reglez la tonalite et la gamme du morceau (ou laissez ANALYSER les proposer).
+3. Lancez la lecture d'un passage chante, puis appuyez sur ANALYSER. Le plugin ecoute 12 secondes et regle la chaine.
+4. Dosez avec INTENSITE, puis affinez avec les 8 boutons du bas ou module par module.
+
+ENREGISTRER AVEC L'AUTOTUNE DANS LE CASQUE
+Passez le plugin en mode "Tracking" (liste en haut a droite) : sa latence tombe a 5 ms.
+Utilisez le pilote ASIO de votre carte son et un tampon de 128 echantillons ou moins
+(Options > Audio settings). Revenez en mode "Mix" pour le mixage : qualite maximale, 18 ms
+(39 ms avec la reduction de bruit), compenses automatiquement par FL Studio.
