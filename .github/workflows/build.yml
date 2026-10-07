@@ -1,0 +1,77 @@
+name: Compiler le plugin
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tests:
+    name: Tests des traitements
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: g++ -std=c++20 -O2 -I Source tests/dsp_tests.cpp -o dsp_tests && ./dsp_tests
+
+  windows:
+    name: Windows (VST3)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurer
+        run: cmake -B build -A x64
+      - name: Compiler
+        run: cmake --build build --config Release --target MJ7VocalChain_VST3 --parallel
+      - name: Emballer
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item -Recurse "build/MJ7VocalChain_artefacts/Release/VST3/MJ7 Vocal Chain.vst3" dist/
+          Copy-Item INSTALLATION.txt dist/
+          Compress-Archive -Path dist/* -DestinationPath MJ7-Vocal-Chain-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MJ7-Vocal-Chain-Windows
+          path: MJ7-Vocal-Chain-Windows.zip
+
+  macos:
+    name: macOS (VST3 + AU, Apple Silicon et Intel)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurer
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"
+      - name: Compiler
+        run: cmake --build build --config Release --target MJ7VocalChain_VST3 MJ7VocalChain_AU --parallel
+      - name: Emballer
+        run: |
+          mkdir dist
+          cp -R "build/MJ7VocalChain_artefacts/Release/VST3/MJ7 Vocal Chain.vst3" dist/
+          cp -R "build/MJ7VocalChain_artefacts/Release/AU/MJ7 Vocal Chain.component" dist/
+          cp INSTALLATION.txt dist/
+          codesign --force --deep --sign - "dist/MJ7 Vocal Chain.vst3" "dist/MJ7 Vocal Chain.component"
+          ditto -c -k dist MJ7-Vocal-Chain-macOS.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MJ7-Vocal-Chain-macOS
+          path: MJ7-Vocal-Chain-macOS.zip
+
+  publier:
+    name: Publier les fichiers a telecharger
+    needs: [windows, macos]
+    if: always() && (needs.windows.result == 'success' || needs.macos.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: zips
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.0.${{ github.run_number }}
+          name: MJ7 Vocal Chain - version ${{ github.run_number }}
+          body: Fichiers prets a installer. Voir INSTALLATION.txt dans chaque archive.
+          files: zips/*.zip
