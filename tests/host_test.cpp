@@ -69,6 +69,8 @@ int main (int argc, char** argv)
         // chaque prereglage : rien d'infini, plafond du limiteur respecte
         for (int i = 0; i < (int) mj7::factoryPresets().size(); ++i)
         {
+            for (const auto& [pid, value] : mj7::factoryPresets()[(size_t) i].values)
+                CHECK (value >= mj7::paramDef (pid).min && value <= mj7::paramDef (pid).max, "valeur de preset hors limites");
             p.loadFactoryPreset (i);
             const auto out = run (p, voice, rnd);
             const float peak = out.getMagnitude (0, out.getNumSamples()), rms = out.getRMSLevel (0, 0, out.getNumSamples());
@@ -83,7 +85,7 @@ int main (int argc, char** argv)
         for (int pass = 0; pass < 4; ++pass)
         {
             static const char* passName[4] = { "(mix) ", "(bypass) ", "(tracking) ", "(mix + reduction de bruit) " };
-            p.loadFactoryPreset ((int) mj7::factoryPresets().size() - 1);
+            p.loadFactoryPreset (mj7::kV3PresetStart - 1);            // Neutre
             for (const auto& m : mj7::modules()) p.apvts.getParameter (mj7::paramDef (m.bypass).id)->setValueNotifyingHost (0.0f);
             p.apvts.getParameter ("hpf_freq")->setValueNotifyingHost (0.0f);
             p.apvts.getParameter ("bypass")->setValueNotifyingHost (pass == 1 ? 1.0f : 0.0f);

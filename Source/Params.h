@@ -207,6 +207,9 @@ inline const std::vector<ModuleDef>& modules()
 }
 
 // ----------------------------------------------------------------------------------------------
+// Premier preset de la serie V3 (Afro, Amapiano, Pop, House) : sert a afficher un titre dans la liste.
+inline constexpr int kV3PresetStart = 12;
+
 struct FactoryPreset
 {
     const char* name;
@@ -252,6 +255,42 @@ inline const std::vector<FactoryPreset>& factoryPresets()
           { { tune_speed, 20 }, { harm_on, 1 }, { harm_stack, 0 }, { h1_int, 6 }, { h2_int, 4 }, { h3_int, 0 }, { h4_int, 0 }, { harm_mix, 40 },
             { tone_air_g, 4 }, { rev_decay, 2.2f }, { rev_mix, 18 } } },
         { "Neutre (point de départ)", { 3.0f, 4.0f, -7.0f, -16.0f, 5.0f, 2.5f }, {} },
+
+        // --- V3 : styles Afro, Amapiano, Pop, House (ajoutes a la fin pour garder les anciens projets intacts) ---
+        { "Afro lead chaud", { 3.5f, 4.0f, -7.0f, -14.5f, 5.0f, 2.5f },
+          { { tune_speed, 15 }, { tune_amount, 90 }, { hpf_freq, 100 }, { tone_low_g, 1.5f }, { tone_mid_f, 1200 }, { tone_mid_g, 1 },
+            { tone_pres_g, 2 }, { tone_air_g, 4 }, { sat_mode, 1 }, { sat_drive, 6 }, { sat_mix, 25 }, { dbl_detune, 8 }, { dbl_mix, 16 },
+            { dly_sync, 3 }, { dly_fb, 30 }, { dly_lp, 6000 }, { dly_mix, 12 }, { rev_type, 0 }, { rev_decay, 1.6f }, { rev_predelay, 25 }, { rev_mix, 16 } } },
+        { "Afro autotune + chœur", { 3.0f, 4.0f, -6.5f, -14.0f, 6.0f, 3.0f },
+          { { tune_speed, 0 }, { hpf_freq, 110 }, { c1_ratio, 5 }, { sat_mode, 1 }, { sat_drive, 9 }, { sat_mix, 35 }, { tone_air_g, 4 },
+            { harm_on, 1 }, { harm_stack, 0 }, { h1_int, 6 }, { h2_int, 1 }, { h3_int, 0 }, { h4_int, 0 }, { harm_width, 90 }, { harm_mix, 45 },
+            { dly_sync, 4 }, { dly_ping, 1 }, { dly_fb, 35 }, { dly_mix, 12 }, { rev_type, 1 }, { rev_decay, 2.4f }, { rev_mix, 18 } } },
+        { "Amapiano lead aérien", { 2.0f, 3.0f, -7.0f, -13.0f, 5.0f, 2.5f },
+          { { tune_speed, 20 }, { tune_amount, 85 }, { hpf_freq, 130 }, { tone_low_g, -2 }, { tone_pres_g, 2 }, { tone_air_g, 5 },
+            { sat_mode, 0 }, { sat_drive, 5 }, { sat_mix, 20 }, { dbl_mix, 18 },
+            { dly_sync, 2 }, { dly_ping, 1 }, { dly_fb, 42 }, { dly_hp, 400 }, { dly_lp, 5000 }, { dly_mix, 18 },
+            { rev_type, 1 }, { rev_decay, 3.2f }, { rev_predelay, 45 }, { rev_hp, 350 }, { rev_mix, 24 }, { duck_amt, 8 } } },
+        { "Amapiano chant de groupe", { 1.5f, 3.0f, -7.0f, -14.0f, 6.0f, 3.0f },
+          { { tune_speed, 5 }, { hpf_freq, 140 }, { tone_low_g, -2 }, { tone_air_g, 3 },
+            { harm_on, 1 }, { harm_stack, 0 }, { h1_int, 1 }, { h2_int, 5 }, { h3_int, 6 }, { h4_int, 0 }, { harm_width, 100 }, { harm_mix, 60 },
+            { dbl_detune, 14 }, { dbl_mix, 35 }, { dly_sync, 2 }, { dly_fb, 30 }, { dly_mix, 12 }, { rev_type, 1 }, { rev_decay, 2.8f }, { rev_mix, 24 } } },
+        { "Pop lead brillant", { 3.0f, 3.5f, -6.0f, -12.5f, 5.0f, 2.5f },
+          { { tune_speed, 30 }, { tune_amount, 75 }, { c1_ratio, 4 }, { ds_range, 10 }, { tone_pres_g, 3 }, { tone_air_g, 6 },
+            { sat_mode, 0 }, { sat_drive, 4 }, { sat_mix, 18 }, { dbl_mix, 14 },
+            { dly_sync, 4 }, { dly_fb, 22 }, { dly_mix, 8 }, { rev_type, 0 }, { rev_decay, 1.8f }, { rev_mix, 14 } } },
+        { "Pop intime / R&B doux", { 4.0f, 4.0f, -8.0f, -14.0f, 4.5f, 2.5f },
+          { { tune_speed, 40 }, { tune_amount, 60 }, { c1_ratio, 3 }, { c1_attack, 6 }, { tone_low_g, 2 }, { tone_pres_g, 1 }, { tone_air_g, 4 },
+            { sat_mode, 1 }, { sat_drive, 5 }, { sat_mix, 22 }, { dbl_mix, 10 },
+            { dly_sync, 2 }, { dly_fb, 28 }, { dly_mix, 10 }, { rev_type, 0 }, { rev_decay, 2.4f }, { rev_mix, 20 } } },
+        { "House diva", { 2.0f, 3.0f, -6.0f, -12.0f, 5.5f, 3.0f },
+          { { tune_speed, 15 }, { hpf_freq, 130 }, { c1_ratio, 5 }, { tone_low_g, -2 }, { tone_pres_g, 3 }, { tone_air_g, 6 },
+            { sat_mode, 0 }, { sat_drive, 7 }, { sat_mix, 25 }, { dbl_mix, 20 },
+            { dly_sync, 3 }, { dly_ping, 1 }, { dly_fb, 45 }, { dly_hp, 400 }, { dly_mix, 18 },
+            { rev_type, 1 }, { rev_decay, 3.6f }, { rev_predelay, 50 }, { rev_hp, 350 }, { rev_mix, 26 }, { duck_amt, 8 } } },
+        { "House vocal filtré", { 0.0f, 2.0f, -6.0f, -16.0f, 6.0f, 3.0f },
+          { { tune_speed, 0 }, { hpf_freq, 150 }, { flt_on, 1 }, { flt_hp, 300 }, { flt_lp, 6000 }, { flt_res, 1.5f },
+            { sat_mode, 1 }, { sat_drive, 10 }, { sat_mix, 35 }, { dbl_mix, 25 },
+            { dly_sync, 5 }, { dly_ping, 1 }, { dly_fb, 40 }, { dly_mix, 22 }, { rev_type, 1 }, { rev_decay, 2.6f }, { rev_mix, 22 } } },
     };
     return p;
 }

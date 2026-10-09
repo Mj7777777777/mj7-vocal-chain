@@ -4,7 +4,12 @@ Tranche de voix complète pour FL Studio (VST3 sur Windows et Mac, Audio Unit su
 réduction de bruit, harmoniseur 4 voix, EQ, de-esser, compression, saturation, doubleur, delay, réverbe et limiteur dans un seul plugin, avec un bouton
 **ANALYSER** qui écoute la voix et règle la chaîne.
 
-![Interface](docs/interface.png)
+## Nouveautés de la version 3
+
+Huit styles Afro, Amapiano, Pop et House, rangés sous leur propre titre dans la liste des styles :
+Afro lead chaud, Afro autotune + chœur, Amapiano lead aérien, Amapiano chant de groupe, Pop lead brillant,
+Pop intime / R&B doux, House diva, House vocal filtré. Les styles de la version 2 ne changent pas, les anciens
+projets FL Studio s'ouvrent à l'identique.
 
 ## Obtenir le plugin prêt à installer
 

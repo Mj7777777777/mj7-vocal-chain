@@ -282,7 +282,12 @@ MainView::MainView (MJ7Processor& p) : proc (p), analyse (p)
 
     // --- barre du haut ---
     int id = 1;
-    for (const auto& f : factoryPresets()) presetBox.addItem (U8 (f.name), id++);
+    presetBox.addSectionHeading (U8 ("RAP / TRAP / MÉLODIQUE"));
+    for (const auto& f : factoryPresets())
+    {
+        if (id - 1 == kV3PresetStart) presetBox.addSectionHeading (U8 ("AFRO / AMAPIANO / POP / HOUSE"));
+        presetBox.addItem (U8 (f.name), id++);
+    }
     presetBox.setTooltip (U8 ("Style de voix. Il fixe les effets et la couleur visée par le bouton ANALYSER."));
     presetBox.onChange = [this]
     {
